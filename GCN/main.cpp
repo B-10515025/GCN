@@ -28,12 +28,10 @@ int readFeatures(const char* file, double* &X, double* &Y, vector<string>& ID, v
             d.label = word;
         }
         if (d.id == "" || d.label == "" || d.features.size() == 0 || (data.size() > 0 && d.features.size() != data[0].features.size()))
-        {
-            cout << "Read Features Error\n";
-            exit(0);
-        }
+            error("Read Features");
         data.push_back(d);
     }
+    cout << data[0].features.size() << " Features.\n";
     ID.clear();
     Name.clear();
     bool push;
@@ -42,10 +40,7 @@ int readFeatures(const char* file, double* &X, double* &Y, vector<string>& ID, v
         push = true;
         for (int j = 0; j < ID.size(); j++)
             if (data[i].id == ID[j])
-            {
-                cout << "Duplicate ID Error\n";
-                exit(0);
-            }
+                error("Duplicate ID");
         ID.push_back(data[i].id);
         for (int j = 0; j < Name.size(); j++)
             if (data[i].label == Name[j])
@@ -55,7 +50,7 @@ int readFeatures(const char* file, double* &X, double* &Y, vector<string>& ID, v
     }
     X = new double[data.size() * data[0].features.size()];
     Y = new double[data.size() * Name.size()];
-    cout << "Read Features Cost " << (data.size() * data[0].features.size() + data.size() * Name.size()) * sizeof(double) << " Bytes Memory\n";
+    memory("Read Features", (data.size() * data[0].features.size() + data.size() * Name.size()) * sizeof(double));
     for (int i = 0; i < data.size(); i++)
     {
         for (int j = 0; j < data[i].features.size(); j++)
@@ -99,10 +94,7 @@ void readGraph(const char* file, vector<string>& ID, vector<vector<edge>>& graph
                 distIndex = i;
         }
         if (srcIndex < 0 || distIndex < 0)
-        {
-            cout << "Read Graph Error.\n";
-            exit(0);
-        }
+            error("Read Graph");
         bool push;
         e.N = distIndex;
         push = true;
@@ -125,9 +117,9 @@ void readGraph(const char* file, vector<string>& ID, vector<vector<edge>>& graph
             graph[i][j].V = 1 / sqrt(graph[i].size() * graph[graph[i][j].N].size());
             count++;
         }
-    cout << "Read Graph Cost " << graph.size() * sizeof(vector<edge>) + count * (sizeof(int) + sizeof(double)) << " Bytes Memory\n";
+    memory("Read Graph", graph.size() * sizeof(vector<edge>) + count * (sizeof(int) + sizeof(double)));
 }
-void getSplit(int size, vector<int>& trainNode, int trainWeight, vector<int>& validationNode, int validationWeight, vector<int>& testNode, int testWeight)
+void nodeSplit(int size, vector<int>& trainNode, int trainWeight, vector<int>& validationNode, int validationWeight, vector<int>& testNode, int testWeight)
 {
     trainNode.clear();
     validationNode.clear();
@@ -161,6 +153,18 @@ void getSplit(int size, vector<int>& trainNode, int trainWeight, vector<int>& va
     }
     cout << "Split: " << train << " Train Node, " << validation << " Validation Node, " << test << " Test Node\n";
 }
+void nodeCluster(vector<vector<int>>& cluster, int number, int node, string method)
+{
+    if (method == "random")
+    {
+        cluster.clear();
+        for (int i = 0; i < number; i++)
+            cluster.push_back(vector<int>(node, 0));
+        srand(time(NULL));
+        for (int i = 0; i < node; i++)
+            cluster[rand() % number][i] = 1;
+    }
+}
 int main()
 {
     vector<int> shape;
@@ -173,12 +177,15 @@ int main()
     shape.push_back(16);
     shape.push_back(Name.size());
     vector<int> trainNode, validationNode, testNode, predictLabel;
-    getSplit(graph.size(), trainNode, 1, validationNode, 2, testNode, 7);
+    nodeSplit(graph.size(), trainNode, 1, validationNode, 2, testNode, 7);
+    vector<vector<int>> cluster;
+    nodeCluster(cluster, 10, ID.size(), "random");
     GCN model(shape, time(NULL));
-    model.earlystop = 30;
-    model.max_epoch = 500;
-    model.fit(X, Y, graph, trainNode, validationNode);
-    model.predict(X, predictLabel, graph, testNode);
+    model.earlystop = 50;
+    model.decay = pow(10, -0.2);
+    model.max_epoch = 1000;
+    model.train(X, Y, graph, cluster, 2, trainNode, validationNode);
+    model.predict(X, predictLabel, graph, testNode, true);
     int acc = 0, count = 0, index;
     for (int i = 0; i < predictLabel.size(); i++)
         if (predictLabel[i] >= 0)

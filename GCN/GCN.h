@@ -23,6 +23,10 @@ public:
 	int max_epoch, show_per_epoch, earlystop;
 	double init_learning_rate, min_learning_rate, decay;
 	GCN(vector<int>&, int);
-	void fit(double*, double*, vector<vector<edge>>&, vector<int>&, vector<int>&);
-	void predict(double*, vector<int>&, vector<vector<edge>>&, vector<int>&);
+	~GCN();
+	void train(double*, double*, vector<vector<edge>>&, vector<vector<int>>&, int, vector<int>&, vector<int>&);
+	int fit(double*, double*, vector<vector<edge>>&, vector<int>&, double);
+	void predict(double*, vector<int>&, vector<vector<edge>>&, vector<int>&, bool);
 };
+void error(string msg);
+void memory(string msg, int byte);
