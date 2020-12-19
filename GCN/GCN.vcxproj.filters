@@ -18,13 +18,21 @@
     <ClCompile Include="main.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="GCN.cpp">
+    <ClCompile Include="utils.cpp">
       <Filter>資源檔</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="utils.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
     <ClInclude Include="GCN.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="GCN.cu">
+      <Filter>資源檔</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>
