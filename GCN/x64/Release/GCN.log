@@ -1,14 +1,50 @@
-﻿  main.cpp
-E:\課程\資料探勘\Final\GCN\GCN\main.cpp(15,32): warning C4267: '引數': 將 'size_t' 轉換為 '_Ty'，資料可能遺失
-          with
-          [
-              _Ty=int
-          ]
-E:\課程\資料探勘\Final\GCN\GCN\main.cpp(16,15): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
-E:\課程\資料探勘\Final\GCN\GCN\main.cpp(18,73): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+﻿  Compiling CUDA source file GCN.cu...
+  
+  E:\課程\資料探勘\Final\GCN\GCN>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.1\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\bin\HostX86\x64" -x cu   -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.1\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.1\include"     --keep-dir x64\Release -maxrregcount=0  --machine 64 --compile -cudart static     -DNDEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /O2 /Fdx64\Release\vc142.pdb /FS   /MD " -o x64\Release\GCN.cu.obj "E:\課程\資料探勘\Final\GCN\GCN\GCN.cu" 
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(252): warning : variable "sum" was declared but never referenced
+  
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(436): warning : variable "byte" was declared but never referenced
+  
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(514): warning : variable "sum" was declared but never referenced
+  
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(515): warning : variable "byte" was declared but never referenced
+  
+  GCN.cu
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(36): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(140): warning C4267: '+=': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(278): warning C4267: '=': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(302): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(252): warning C4101: 'sum': 未參考的區域變數
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(444): warning C4267: '+=': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(457): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(459): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(460): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(467): warning C4267: '正在初始化': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(470): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(472): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(473): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(475): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(477): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(489): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(491): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(497): warning C4267: '正在初始化': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(500): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(502): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(505): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(507): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(522): warning C4267: '+=': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(534): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(536): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:/課程/資料探勘/Final/GCN/GCN/GCN.cu(514): warning C4101: 'sum': 未參考的區域變數
+  utils.cpp
+E:\課程\資料探勘\Final\GCN\GCN\utils.cpp(75,113): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:\課程\資料探勘\Final\GCN\GCN\utils.cpp(86,35): warning C4267: 'return': 將 'size_t' 轉換為 'int'，資料可能遺失
+E:\課程\資料探勘\Final\GCN\GCN\utils.cpp(142,102): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
   正在產生程式碼
-  1 of 569 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  0 of 569 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   已完成程式碼產生
+utils.obj : warning LNK4020: 'e:\課程\資料探勘\final\gcn\gcn\x64\release\vc142.pdb' 中的類型記錄已經損毀，可能無法從偵錯工具存取某些符號和類型
+main.obj : warning LNK4020: 'e:\課程\資料探勘\final\gcn\gcn\x64\release\vc142.pdb' 中的類型記錄已經損毀，可能無法從偵錯工具存取某些符號和類型
   GCN.vcxproj -> E:\課程\資料探勘\Final\GCN\x64\Release\GCN.exe

@@ -185,20 +185,3 @@ void nodeCluster(vector<vector<int>>& cluster, vector<vector<edge>>& graph, int 
             cluster[rand() % number][i] = 1;
     }
 }
-bool InitCUDA()
-{
-    int count;
-    cudaGetDeviceCount(&count);
-    if (count == 0)
-        return false;
-    for (int i = 0; i < count; i++) {
-        cudaDeviceProp prop;
-        if (cudaGetDeviceProperties(&prop, i) == cudaSuccess)
-            if (prop.major >= 1)
-            {
-                cudaSetDevice(i);
-                return true;
-            }
-    }
-    return false;
-}
