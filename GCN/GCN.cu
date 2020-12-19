@@ -17,10 +17,11 @@ GCN::GCN(vector<int>& _shape, bool _gpu)
         weightCount += (shape[i - 1] + 1) * shape[i];
     }
     weight = new double[weightCount];
+    best_weight = new double[weightCount];
     delta = new double[weightCount];
     if (!(weight && delta))
         error("Memory");
-    memory("Build Model", 2 * weightCount * sizeof(double));
+    memory("Build Model", 3 * weightCount * sizeof(double));
     GPU = InitCUDA() & _gpu;
     if (GPU)
     {
@@ -56,6 +57,7 @@ GCN::~GCN()
     delete[] nodeOffset;
     delete[] weightOffset;
     delete[] weight;
+    delete[] best_weight;
     delete[] delta;
 }
 bool GCN::InitCUDA()
@@ -395,6 +397,7 @@ void GCN::train(double* X, double* Y, vector<vector<edge>>& graph, vector<vector
         {
             max_acc = val_acc;
             acc_count = 0;
+            memcpy(best_weight, weight, weightCount * sizeof(double));
         }
         else
             acc_count++;
@@ -415,6 +418,7 @@ void GCN::train(double* X, double* Y, vector<vector<edge>>& graph, vector<vector
                 BEGIN = clock();
         }
     }
+    memcpy(weight, best_weight, weightCount * sizeof(double));
     delete[] groupIndex;
     delete[] batchNodeIndex;
     delete[] Mapper;

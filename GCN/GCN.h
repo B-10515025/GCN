@@ -9,7 +9,7 @@ class GCN
 	bool GPU;
 	int nodeCount, maxNodeCount, weightCount;
 	int* nodeOffset, * weightOffset;
-	double* weight, * delta, * node, * differential, * embedding;
+	double* weight, * best_weight, * delta, * node, * differential, * embedding;
 	int* dev_edgeOffset, * dev_edgeIndex, * dev_activeNode;
 	double* dev_X, * dev_Y, * dev_weight, * dev_delta, * dev_node, * dev_differential, * dev_embedding, * dev_edgeValue;
 	vector<int> shape;
