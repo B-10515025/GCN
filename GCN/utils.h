@@ -18,4 +18,4 @@ void getRandom(int* index, int max);
 int readFeatures(const char*, double*&, double*&, vector<string>&, vector<string>&);
 void readGraph(const char*, vector<string>&, vector<vector<edge>>&);
 void nodeSplit(int, vector<int>&, int, vector<int>&, int, vector<int>&, int);
-void nodeCluster(vector<vector<int>>&, vector<vector<edge>>&, int, string);
+void nodeCluster(vector<vector<int>>&, vector<vector<edge>>&, int, string, string);

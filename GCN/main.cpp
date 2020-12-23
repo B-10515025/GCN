@@ -8,23 +8,23 @@ int main()
     vector<string> ID, Name;
     double* X, * Y;
     vector<vector<edge>> graph;
-    shape.push_back(readFeatures("data/PubMed.content", X, Y, ID, Name));
-    readGraph("data/PubMed.edges", ID, graph);
-    shape.push_back(64);
-    shape.push_back(32);
+    shape.push_back(readFeatures("data/cora.content", X, Y, ID, Name));
+    readGraph("data/cora.edges", ID, graph);
+    shape.push_back(16);
     shape.push_back(16);
     shape.push_back(Name.size());
     srand(time(NULL));
     vector<int> trainNode, validationNode, testNode, predictLabel;
     nodeSplit(graph.size(), trainNode, 1, validationNode, 2, testNode, 7);
     vector<vector<int>> cluster;
-    nodeCluster(cluster, graph, 1, "random");
+    nodeCluster(cluster, graph, 10, "", "data/cora.graph");
     GCN model(shape, true);
     model.earlystop = 500;
-    model.init_learning_rate = 1e-4;
-    model.show_per_epoch = 10;
-    model.max_epoch = 2000;
-    model.train(X, Y, graph, cluster, 1, trainNode, validationNode);
+    model.init_learning_rate = 1e-3;
+    model.decay = pow(10, -0.1);
+    model.show_per_epoch = 100;
+    model.max_epoch = 1000;
+    model.train(X, Y, graph, cluster, 2, trainNode, validationNode);
     model.predict(X, predictLabel, graph, testNode);
     int acc = 0, count = 0, index;
     for (int i = 0; i < predictLabel.size(); i++)
@@ -37,11 +37,6 @@ int main()
             count++;
             if (predictLabel[i] == index)
                 acc++;
-            //cout << i << " " << Name[predictLabel[i]] << " " << Name[index];
-            /*if (predictLabel[i] == index)
-                cout << " O\n";
-            else
-                cout << " X\n";*/
         }
     cout << acc * 100.0 / count << "% Predicted.\n";
     return 0;

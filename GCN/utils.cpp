@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "metis.h" 
 #include <cuda_runtime.h>
 #include <iostream>
 #include <fstream>
@@ -174,7 +175,7 @@ void nodeSplit(int size, vector<int>& trainNode, int trainWeight, vector<int>& v
     }
     cout << "Split: " << train << " Train Node, " << validation << " Validation Node, " << test << " Test Node\n";
 }
-void nodeCluster(vector<vector<int>>& cluster, vector<vector<edge>>& graph, int number, string method)
+void nodeCluster(vector<vector<int>>& cluster, vector<vector<edge>>& graph, int number, string method,string graphPath)
 {
     if (method == "random")
     {
@@ -183,5 +184,62 @@ void nodeCluster(vector<vector<int>>& cluster, vector<vector<edge>>& graph, int 
             cluster.push_back(vector<int>(graph.size(), 0));
         for (int i = 0; i < graph.size(); i++)
             cluster[rand() % number][i] = 1;
+    }
+    else
+    {
+        ifstream ingraph(graphPath);
+        if (!ingraph) {
+            cout << "failed to open graph file" << endl;
+            exit(1);
+        }
+        int vexnum, edgenum;
+        string line;
+        getline(ingraph, line);
+        istringstream tmp(line);
+        tmp >> vexnum >> edgenum;
+        vector<idx_t> xadj(0);
+        vector<idx_t> adjncy(0);
+        vector<idx_t> vwgt(0);
+
+        idx_t a, w;
+        for (int i = 0; i < vexnum; i++) {
+            xadj.push_back(adjncy.size());
+            getline(ingraph, line);
+            istringstream tmp(line);
+            while (tmp >> a >> w) {
+                adjncy.push_back(a);
+                vwgt.push_back(w);
+            }
+        }
+        xadj.push_back(adjncy.size());
+
+        ingraph.close();
+
+
+        idx_t nVertices = xadj.size() - 1;
+        idx_t nEdges = adjncy.size() / 2;
+        idx_t nWeights = 1;
+        idx_t nParts = number;
+        idx_t objval;
+        std::vector<idx_t> part(nVertices, 0);
+
+        if (nParts < 2) { error("ClUSTER_ERROR"); }
+
+        for (int i = 0; i < nParts; i++) {
+            cluster.push_back(vector<int>(graph.size(), 0));
+        }
+
+        int ret = METIS_PartGraphKway(&nVertices, &nWeights, xadj.data(), adjncy.data(),
+            vwgt.data(), NULL, NULL, &nParts, NULL,
+            NULL, NULL, &objval, part.data());
+
+
+        if (ret != rstatus_et::METIS_OK) { error("METIS_ERROR"); }
+        cout << "METIS_OK" << endl;
+
+        for (unsigned node_id = 0; node_id < part.size(); node_id++) {
+            cluster[part[node_id]][node_id] = 1;
+        }
+
     }
 }
